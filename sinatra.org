@@ -77,12 +77,13 @@
 
    Define some routes. Routes are paths on the server -- they're the destinations that requests ask for. These get mapped to URLS, but are relative to your server's IP or domain name (so http://example.com/42 is /42 to Sinatra).
 
-
 * Stage 3: use sessions    
 
   Keep track of user state from request to request (using cookies). For nonpersistent state
 
 * Stage 4: templates
+
+  We'll demo a system called ERB (Embedded RuBy) that is in the Ruby standard library. Put files in the views/ folder with the extension .erb
 
 * Stage 5: using a database
    

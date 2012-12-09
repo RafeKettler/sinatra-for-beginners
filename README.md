@@ -1,5 +1,7 @@
 ## Sinatra for Beginners ##
 
+http://rafekettler.com/talks/sinatra.html
+
 A tech talk originally given at the Dining Philosopher's Newbie Hackathon at the University of Pennsylvania on December 9, 2012.
 
 ### Setup instructions ###
