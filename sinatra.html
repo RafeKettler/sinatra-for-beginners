@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en"> <!-- en -->
+<head>
+<title>Sinatra for Beginners</title>
+<meta charset="iso-8859-1" />
+<meta name="viewport" content="width=1024" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="title" content="Sinatra for Beginners"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-12-09T11:12-0500"/>
+<meta name="author" content="Rafe Kettler"/>
+<meta name="description" content=" impress.js is a presentation tool based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com."/>
+<meta name="keywords" content=""/>&nbsp;
+
+<script src="js/impress.js"></script><link href="css/impress-demo.css" rel="stylesheet" /><link href="css/mystyle.css" rel="stylesheet" />
+
+
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+<body>
+
+
+<div id="impress" class="impress-not-supported">
+<div class="fallback-message">
+<p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+<p>For the best experience please use the latest <b>Chrome</b> or <b>Safari</b> browser. Firefox 10 (to be released soon) will also handle it.</p>
+</div>
+
+<div id="title" class="step slide" data-x="0" data-y="0"><h1 class="title">Sinatra for Beginners</h1><div class="author">Rafe Kettler</div><div class="date">2012-12-09T11:12-0500</div><div class="creator">Org version Org-mode version 7.8.11 with Emacs version 24</div></div>
+
+<div id="outline-container-1" class="outline-2 slide step" data-x="1024.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-1">Sinatra for Beginners</h1></header>
+<section>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+  <a href="http://github.com/RafeKettler/sinatra-for-beginners">http://github.com/RafeKettler/sinatra-for-beginners</a>
+</p>
+<p>
+  Sinatra is a simple web framework written in Ruby. This talk assumes some familiarity with Ruby (though I'll explain all code line by line).
+</p>
+<p>
+  We'll start with a crash course on HTTP and basic concepts for web programming, then introduce features of Sinatra incrementally, including rendering HTML, sessions, and storing data in a database.
+</p>
+<p>
+  (Ask questions any time)
+</p>
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-2" class="outline-2 slide step" data-x="2048.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-2">An HTTP crash course</h1></header>
+<section>
+<div class="outline-text-2" id="text-2">
+
+
+<ul>
+<li>HTTP: Hypertext Transfer Protocol
+<ul>
+<li>Hypertext: HTML!
+</li>
+<li>Transfer: Communication!
+</li>
+<li>Protocol: standard format and method for communication!
+</li>
+</ul>
+
+</li>
+<li>The protocol that dictates how to communicate on the internet (there are other protocols that do the same, but HTTP is the most common)
+</li>
+</ul>
+
+
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-3" class="outline-2 slide step" data-x="3072.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-3">Request-Response Cycle</h1></header>
+<section>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+  In HTTP, clients (think a web browser) make <span style="text-decoration:underline;">requests</span> to the server, which processes the request and sends a <span style="text-decoration:underline;">response</span>.
+</p>
+<p>
+  <img src="http://i.imgur.com/YXgj8.png"  alt="http://i.imgur.com/YXgj8.png" />
+</p>
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-4" class="outline-2 slide step" data-x="4096.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-4">The request</h1></header>
+<section>
+<div class="outline-text-2" id="text-4">
+
+
+<ul>
+<li>Requests have a method: GET or POST (some others, but these are the most notable and all you really need)
+</li>
+<li>They have a destination: a URL
+</li>
+<li>They might have parameters:
+<ul>
+<li>Through GET parameters in the URL querystring (i.e., <a href="http://example.com/?q=hello&amp;r=world">http://example.com/?q=hello&amp;r=world</a>)
+</li>
+<li>Through POST parameters in the request body
+</li>
+</ul>
+
+</li>
+<li>They have a body
+</li>
+<li>They have headers &ndash; Used to specify low-level metadata to the HTTP server
+<ul>
+<li>Used by extensions to HTTP
+</li>
+<li>Sometimes used by web services (APIs)
+</li>
+</ul>
+
+</li>
+</ul>
+
+
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-5" class="outline-2 slide step" data-x="5120.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-5">The response</h1></header>
+<section>
+<div class="outline-text-2" id="text-5">
+
+
+<ul>
+<li>What the server sends back to the client. On your browser, it's an HTML page, or an image, or a JavaScript, or something else&hellip;
+</li>
+<li>Responses have status codes (201 OK, 301 redirect, 404 not found, 500 internal server error)
+</li>
+<li>Responses also have headers, which serve a similar purpose as in requests
+</li>
+<li>Responses have a body, which is just data
+</li>
+</ul>
+
+
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-6" class="outline-2 slide step" data-x="6144.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-6">How this relates to web programming</h1></header>
+<section>
+<div class="outline-text-2" id="text-6">
+
+
+<ul>
+<li>Your job, as a web programmer, is to process requests and render appropriate responses. You're the middle man.
+</li>
+<li>This usually gets divided into a few tasks: figuring out what data to display based on the request, and presenting the data. In Sinatra, you write Ruby code to do the first part and can use any number of templating engines to render HTML for the second part.
+</li>
+</ul>
+
+
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-7" class="outline-2 slide step" data-x="7168.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-7">Who is Sinatra</h1></header>
+<section>
+<div class="outline-text-2" id="text-7">
+
+
+<p>
+  <img src="http://i.imgur.com/wpkks.jpg"  alt="http://i.imgur.com/wpkks.jpg" />
+</p>
+<p>  
+  A member of the Brat Pack &ndash; wrong
+</p>
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-8" class="outline-2 slide step" data-x="8192.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-8">Who is Sinatra</h1></header>
+<section>
+<div class="outline-text-2" id="text-8">
+
+
+<p>
+  <img src="http://i.imgur.com/BpyBn.jpg"  alt="http://i.imgur.com/BpyBn.jpg" />
+</p>
+<p>  
+  A full stack, kitchen-sink included web framework &ndash; wrong
+</p>
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-9" class="outline-2 slide step" data-x="9216.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-9">Who is Sinatra</h1></header>
+<section>
+<div class="outline-text-2" id="text-9">
+
+
+<p>
+  <img src="http://i.imgur.com/xCu09.jpg"  alt="http://i.imgur.com/xCu09.jpg" />
+</p>
+<p>  
+  A simple, minimal web framework with a surprising number of built-in goodies &ndash; right!
+</p>
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-10" class="outline-2 slide step" data-x="10240.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-10">Stage 1: boilerplate</h1></header>
+<section>
+<div class="outline-text-2" id="text-10">
+
+
+<p>
+   Import it. Turn on serving static files from "static/" (like JavaScript, CSS, or images). If you have a file "static/foo.js", it will be accessible at <a href="http://example.com/foo.js">http://example.com/foo.js</a>.
+</p>
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-11" class="outline-2 slide step" data-x="11264.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-11">Stage 2: make some routes</h1></header>
+<section>
+<div class="outline-text-2" id="text-11">
+
+
+<p>
+   Define some routes. Routes are paths on the server &ndash; they're the destinations that requests ask for. These get mapped to URLS, but are relative to your server's IP or domain name (so <a href="http://example.com/42">http://example.com/42</a> is /42 to Sinatra).
+</p>
+
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-12" class="outline-2 slide step" data-x="12288.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-12">Stage 3: use sessions</h1></header>
+<section>
+<div class="outline-text-2" id="text-12">
+
+
+<p>
+  Keep track of user state from request to request (using cookies). For nonpersistent state
+</p>
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-13" class="outline-2 slide step" data-x="13312.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-13">Stage 4: templates</h1></header>
+<section>
+<div class="outline-text-2" id="text-13">
+
+
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-14" class="outline-2 slide step" data-x="14336.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-14">Stage 5: using a database</h1></header>
+<section>
+<div class="outline-text-2" id="text-14">
+
+
+<p>   
+   Using datamapper, a Ruby ORM (an object-oriented abstraction over a relational database)
+</p>
+</div>
+</section>
+
+</div>
+
+<div id="outline-container-15" class="outline-2 slide step" data-x="15360.0" data-y="0.0" data-z="0.0" data-rotate="0.000000" data-rotate-x="0.000000" data-rotate-y="0.000000" data-scale="1">
+<header><h1 id="sec-15">Further resources</h1></header>
+<section>
+<div class="outline-text-2" id="text-15">
+
+
+<ul>
+<li><a href="http://www.sinatrarb.com/intro.html">http://www.sinatrarb.com/intro.html</a>
+</li>
+<li><a href="http://ruby-doc.org/stdlib-1.9.3/libdoc/erb/rdoc/ERB.html">http://ruby-doc.org/stdlib-1.9.3/libdoc/erb/rdoc/ERB.html</a>
+</li>
+<li><a href="http://datamapper.org/">http://datamapper.org/</a>
+</li>
+</ul>
+
+</div>
+</section>
+</div>
+</div>
+
+
+<div class="hint">
+<p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) {
+document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+
+<script>impress().init();</script>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+#+TITLE: Sinatra for Beginners
+#+AUTHOR: Rafe Kettler
+#+OPTIONS: toc:nil num:nil ^:nil
+#+STYLE: <script src="js/impress.js"></script><link href="css/impress-demo.css" rel="stylesheet" /><link href="css/mystyle.css" rel="stylesheet" />
+
+* Sinatra for Beginners
+
+  http://github.com/RafeKettler/sinatra-for-beginners
+
+  Sinatra is a simple web framework written in Ruby. This talk assumes some familiarity with Ruby (though I'll explain all code line by line).
+
+  We'll start with a crash course on HTTP and basic concepts for web programming, then introduce features of Sinatra incrementally, including rendering HTML, sessions, and storing data in a database.
+
+  (Ask questions any time)
+
+* An HTTP crash course
+
+  - HTTP: Hypertext Transfer Protocol
+    - Hypertext: HTML!
+    - Transfer: Communication!
+    - Protocol: standard format and method for communication!
+  - The protocol that dictates how to communicate on the internet (there are other protocols that do the same, but HTTP is the most common)
+
+* Request-Response Cycle
+
+  In HTTP, clients (think a web browser) make _requests_ to the server, which processes the request and sends a _response_.
+
+  http://i.imgur.com/YXgj8.png
+
+* The request
+
+  - Requests have a method: GET or POST (some others, but these are the most notable and all you really need)
+  - They have a destination: a URL
+  - They might have parameters:
+    - Through GET parameters in the URL querystring (i.e., http://example.com/?q=hello&r=world)
+    - Through POST parameters in the request body
+  - They have a body
+  - They have headers -- Used to specify low-level metadata to the HTTP server
+    - Used by extensions to HTTP
+    - Sometimes used by web services (APIs)
+
+* The response
+
+    - What the server sends back to the client. On your browser, it's an HTML page, or an image, or a JavaScript, or something else...
+    - Responses have status codes (201 OK, 301 redirect, 404 not found, 500 internal server error)
+    - Responses also have headers, which serve a similar purpose as in requests
+    - Responses have a body, which is just data
+
+* How this relates to web programming
+
+  - Your job, as a web programmer, is to process requests and render appropriate responses. You're the middle man.
+  - This usually gets divided into a few tasks: figuring out what data to display based on the request, and presenting the data. In Sinatra, you write Ruby code to do the first part and can use any number of templating engines to render HTML for the second part.
+
+* Who is Sinatra
+
+  http://i.imgur.com/wpkks.jpg
+  
+  A member of the Brat Pack -- wrong
+
+* Who is Sinatra
+
+  http://i.imgur.com/BpyBn.jpg
+  
+  A full stack, kitchen-sink included web framework -- wrong
+
+* Who is Sinatra
+
+  http://i.imgur.com/xCu09.jpg
+  
+  A simple, minimal web framework with a surprising number of built-in goodies -- right!
+
+* Stage 1: boilerplate
+
+   Import it. Turn on serving static files from "static/" (like JavaScript, CSS, or images). If you have a file "static/foo.js", it will be accessible at http://example.com/foo.js.
+
+* Stage 2: make some routes
+
+   Define some routes. Routes are paths on the server -- they're the destinations that requests ask for. These get mapped to URLS, but are relative to your server's IP or domain name (so http://example.com/42 is /42 to Sinatra).
+
+
+* Stage 3: use sessions    
+
+  Keep track of user state from request to request (using cookies). For nonpersistent state
+
+* Stage 4: templates
+
+* Stage 5: using a database
+   
+   Using datamapper, a Ruby ORM (an object-oriented abstraction over a relational database)
+
+* Further resources
+
+  - http://www.sinatrarb.com/intro.html
+  - http://ruby-doc.org/stdlib-1.9.3/libdoc/erb/rdoc/ERB.html
+  - http://datamapper.org/
